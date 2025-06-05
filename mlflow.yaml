@@ -1,0 +1,55 @@
+# MLflow configuration
+tracking:
+  backend: sqlite
+  store: sqlite:///mlflow.db
+  artifact_root: ./mlruns
+
+# Experiment tracking
+experiments:
+  default:
+    name: "Default Experiment"
+    description: "Default experiment for tracking model training and evaluation"
+  hyperparameter_tuning:
+    name: "Hyperparameter Tuning"
+    description: "Experiment for tracking hyperparameter optimization results"
+  model_comparison:
+    name: "Model Comparison"
+    description: "Experiment for comparing different model architectures"
+
+# Model registry
+model_registry:
+  backend: sqlite
+  store: sqlite:///mlflow.db
+
+# Logging configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Metrics to track
+metrics:
+  - name: accuracy
+    description: "Model accuracy"
+  - name: f1_score
+    description: "F1 score"
+  - name: precision
+    description: "Precision"
+  - name: recall
+    description: "Recall"
+  - name: loss
+    description: "Training loss"
+  - name: val_loss
+    description: "Validation loss"
+
+# Parameters to track
+parameters:
+  - name: learning_rate
+    description: "Learning rate"
+  - name: batch_size
+    description: "Batch size"
+  - name: epochs
+    description: "Number of epochs"
+  - name: optimizer
+    description: "Optimizer used"
+  - name: model_architecture
+    description: "Model architecture" 

@@ -1,0 +1,37 @@
+stages:
+  prepare:
+    cmd: python src/data/processing.py --config configs/data_config.yaml
+    deps:
+      - src/data/processing.py
+      - configs/data_config.yaml
+    outs:
+      - data/processed/train.csv
+      - data/processed/val.csv
+      - data/processed/test.csv
+    metrics:
+      - metrics/data_stats.json:
+          cache: false
+
+  train:
+    cmd: python src/training/train.py --config configs/training_config.yaml
+    deps:
+      - src/training/train.py
+      - configs/training_config.yaml
+      - data/processed/train.csv
+      - data/processed/val.csv
+    outs:
+      - models/model.pth
+    metrics:
+      - metrics/training_metrics.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/evaluation/evaluate.py --config configs/eval_config.yaml
+    deps:
+      - src/evaluation/evaluate.py
+      - configs/eval_config.yaml
+      - data/processed/test.csv
+      - models/model.pth
+    metrics:
+      - metrics/evaluation_metrics.json:
+          cache: false 

@@ -1,0 +1,55 @@
+{
+    "name": "MLOps for Research",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/data,target=/workspace/data,type=bind,consistency=cached"
+    ],
+    "runArgs": [
+        "--shm-size=8g",
+        "--gpus=all"
+    ],
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "ms-azuretools.vscode-docker",
+                "charliermarsh.ruff",
+                "streetsidesoftware.code-spell-checker",
+                "GitHub.copilot",
+                "iterative.dvc",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "ms-python.mypy-type-checker",
+                "ms-python.pylint",
+                "ms-python.pytest-adapter",
+                "ms-python.vscode-pylance"
+            ],
+            "settings": {
+                "editor.defaultFormatter": "charliermarsh.ruff",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": "explicit",
+                    "source.fixAll": "explicit"
+                },
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.linting.enabled": true,
+                "python.linting.pylintEnabled": true,
+                "python.formatting.provider": "black",
+                "python.testing.pytestEnabled": true,
+                "python.testing.unittestEnabled": false,
+                "python.testing.nosetestsEnabled": false,
+                "python.testing.pytestArgs": [
+                    "tests"
+                ]
+            }
+        }
+    },
+    "postCreateCommand": "pre-commit install",
+    "remoteUser": "vscode"
+} 

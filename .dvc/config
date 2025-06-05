@@ -1,0 +1,11 @@
+[core]
+    analytics = false
+    remote = myremote
+[cache]
+    dir = .dvc/cache
+    type = reflink,symlink,hardlink,copy
+[remote "myremote"]
+    url = s3://your-bucket/dvc
+    endpointurl = https://your-s3-endpoint
+    region = your-region
+    profile = your-profile 
