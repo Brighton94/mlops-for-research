@@ -45,7 +45,8 @@ A template repository for implementing MLOps practices in research projects. Thi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/mlops-for-research.git
+   # Replace with your repository URL
+   git clone https://github.com/YOUR_USERNAME/mlops-for-research.git
    cd mlops-for-research
    ```
 
