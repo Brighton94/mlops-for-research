@@ -19,23 +19,23 @@ RUN apt-get update \
     && groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
-# Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
 # Switch to non-root user
 USER $USERNAME
-ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
+WORKDIR /home/$USERNAME
 
-# Install Python packages using uv and pyproject.toml
+# Install Python packages
 WORKDIR /workspace
-COPY pyproject.toml .
-RUN uv pip install --system -e ".[dev]"
+COPY pyproject.toml ../README.md ./
+RUN pip install --no-cache-dir ".[dev]"
 
-# Set up DVC
-RUN dvc config --global core.analytics false
+# Install DVC and configure it
+ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
+RUN pip install --no-cache-dir "dvc[all]>=3.59.0" && \
+    dvc config --global core.analytics false && \
+    echo 'export PATH="/home/${USERNAME}/.local/bin:$PATH"' >> /home/${USERNAME}/.bashrc
 
 # Set up MLflow
-ENV MLFLOW_TRACKING_URI=http://localhost:5000
+ENV MLFLOW_TRACKING_URI=/workspace/mlruns
 
 WORKDIR /workspace
 
