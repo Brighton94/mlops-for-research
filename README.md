@@ -13,33 +13,7 @@ A template repository for implementing MLOps practices in research projects. Thi
 - 🐳 **Containerization**: Development container configuration for consistent environments
 - 🔄 **CI/CD**: GitHub Actions workflows for automated testing and deployment
 
-## 📁 Project Structure
-
-```
-.
-├── notebooks/              # Jupyter notebooks for analysis and experimentation
-│   ├── 01_eda_and_data_prep.ipynb    # Initial data exploration and preparation
-│   ├── benchmark_etl.ipynb            # ETL pipeline benchmarking
-│   └── benchmark_vectorization.ipynb  # Vectorization performance analysis
-├── src/                    # Source code
-│   ├── data/              # Data processing modules and pipelines
-│   ├── utils/             # Utility functions and helper modules
-│   └── __init__.py
-├── tests/                 # Test suite
-│   └── test_data_processing.py
-├── .devcontainer/         # Development container configuration
-├── .github/              # GitHub Actions workflows
-└── requirements.txt      # Project dependencies
-```
-
 ## 🛠️ Getting Started
-
-### Prerequisites
-
-- Python 3.11 or higher
-- Jupyter Notebook or JupyterLab
-- Git
-- Docker (optional, for containerized development)
 
 ### Installation
 
@@ -50,28 +24,49 @@ A template repository for implementing MLOps practices in research projects. Thi
    cd mlops-for-research
    ```
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
 ### 🚀 Usage
 
-1. **Data Exploration**:
-   - Open `notebooks/01_eda_and_data_prep.ipynb` to explore your dataset
-   - Utilize the provided functions in `src/data/` for data processing
-   - Follow the documentation in each notebook for detailed explanations
+1. **Data Version Control (DVC)**:
+   - Initialize DVC in your project:
+     ```bash
+     dvc init
+     ```
+   - Add data files to DVC:
+     ```bash
+     dvc add data/raw/dataset.csv
+     ```
+   - Track data changes:
+     ```bash
+     dvc push
+     dvc pull
+     ```
+   - Create data pipelines:
+     ```bash
+     dvc run -n prepare -d src/prepare.py -o data/prepared/dataset.csv python src/prepare.py
+     ```
 
-2. **Benchmarking**:
-   - Run `notebooks/benchmark_etl.ipynb` to benchmark your ETL pipeline
-   - Use `notebooks/benchmark_vectorization.ipynb` to test vectorization performance
-   - Compare results with baseline metrics
+2. **MLflow Tracking**:
+   - Start the MLflow tracking server using the provided script:
+     ```bash
+     ./start_mlflow.sh
+     ```
+   - Or start manually:
+     ```bash
+     mlflow server --host 0.0.0.0 --port 5000
+     ```
+   - Track experiments in your code:
+     ```python
+     import mlflow
+     
+     with mlflow.start_run():
+         mlflow.log_param("param1", value1)
+         mlflow.log_metric("metric1", value1)
+         mlflow.log_artifact("path/to/artifact")
+     ```
+   - View experiment results:
+     ```bash
+     mlflow ui
+     ```
 
 3. **Testing**:
    ```bash
@@ -105,15 +100,6 @@ A template repository for implementing MLOps practices in research projects. Thi
   ```bash
   ruff check .
   ```
-
-### Development Container
-
-This project includes a development container configuration for consistent development environments. To use it:
-
-1. Install Docker and VS Code
-2. Install the "Remote - Containers" extension in VS Code
-3. Open the project in VS Code
-4. Click "Reopen in Container" when prompted
 
 ## 🤝 Contributing
 
